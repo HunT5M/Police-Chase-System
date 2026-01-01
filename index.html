@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LSPD Config</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="grid-bg"></div>
+
+    <div class="tech-container" id="menu">
+        
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="nav-buttons">
+                <button class="nav-btn active" onclick="openTab('settings')">
+                    <i class="fa-solid fa-sliders"></i> <span class="nav-text">SETTINGS</span>
+                </button>
+                <button class="nav-btn" onclick="openTab('style')">
+                    <i class="fa-solid fa-eye"></i> <span class="nav-text">VISUALS</span>
+                </button>
+                <button class="nav-btn" onclick="openTab('dispatch')">
+                    <i class="fa-solid fa-tower-broadcast"></i> <span class="nav-text">DISPATCH</span>
+                </button>
+                <button class="nav-btn" onclick="openTab('perms')">
+                    <i class="fa-solid fa-lock"></i> <span class="nav-text">ACCESS</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            
+            <div class="content-header">
+                <span id="header-title">CONFIGURATION</span>
+                <div class="line"></div>
+            </div>
+
+            <!-- SETTINGS TAB -->
+            <div id="settings" class="tab-page active">
+                <div class="input-group">
+                    <div class="label-box">
+                        <label data-tooltip="MINIMUM SPEED REQUIRED TO MAINTAIN CHASE LOCK">MIN SPEED</label>
+                        <span id="sVal">50 km/h</span>
+                    </div>
+                    <input type="range" id="minSpeed" min="10" max="150" value="50" oninput="updateVal(this, 'sVal', ' km/h')">
+                </div>
+                <div class="input-group">
+                    <div class="label-box">
+                        <label data-tooltip="MAXIMUM OPERATIONAL RADIUS FOR SIGNAL ACQUISITION">LOCK DISTANCE</label>
+                        <span id="dVal">30 m</span>
+                    </div>
+                    <input type="range" id="maxDist" min="5" max="100" value="30" oninput="updateVal(this, 'dVal', ' m')">
+                </div>
+                <div class="input-group">
+                    <div class="label-box">
+                        <label data-tooltip="SIGNAL PROCESSING SPEED FOR TACTICAL DEPLOYMENT">FILL RATE</label>
+                        <span id="fVal">0.05</span>
+                    </div>
+                    <input type="range" id="fillRate" min="0.01" max="0.5" step="0.01" value="0.05" oninput="updateVal(this, 'fVal', '')">
+                </div>
+            </div>
+
+            <!-- STYLE TAB -->
+            <div id="style" class="tab-page">
+                <div class="colors-container">
+                    <div class="color-box"><label>BAR</label><input type="color" id="barColor" value="#ffffff"></div>
+                    <div class="color-box"><label>READY</label><input type="color" id="readyColor" value="#cccccc"></div>
+                    <div class="color-box"><label>TEXT</label><input type="color" id="targetColor" value="#ffffff"></div>
+                </div>
+                <div class="input-group mt-20">
+                    <div class="label-box">
+                        <label data-tooltip="GLOBAL TRANSPARENCY FOR CHASE PROGRESS BAR AND VEHICLE TARGET DATA">OPACITY</label>
+                        <span id="aVal">220</span>
+                    </div>
+                    <input type="range" id="globalAlpha" min="50" max="255" value="220" oninput="updateVal(this, 'aVal', '')">
+                </div>
+            </div>
+
+            <!-- DISPATCH TAB -->
+            <div id="dispatch" class="tab-page">
+                <div class="switch-row">
+                    <label>AUTO DISPATCH (AT 100%)</label>
+                    <label class="switch" data-tooltip="AUTOMATIC GPS TRANSMISSION TO ALL UNITS UPON 100% SIGNAL ACQUISITION">
+                        <input type="checkbox" id="dispatchSwitch">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="label-box mt-20"><label>BLIP ICON</label></div>
+                <div class="selection-grid" id="blipIcons">
+                    <div class="sel-item active" onclick="selectBlip(this, 161)"><i class="fa-solid fa-bullseye"></i></div>
+                    <div class="sel-item" onclick="selectBlip(this, 60)"><i class="fa-solid fa-shield-halved"></i></div>
+                    <div class="sel-item" onclick="selectBlip(this, 58)"><i class="fa-solid fa-circle-exclamation"></i></div>
+                    <div class="sel-item" onclick="selectBlip(this, 1)"><i class="fa-regular fa-circle"></i></div>
+                </div>
+
+                <div class="label-box mt-20"><label>BLIP COLOR</label></div>
+                <div class="selection-grid" id="blipColors">
+                    <div class="sel-color active" style="background:#d43535" onclick="selectColor(this, 1)"></div>
+                    <div class="sel-color" style="background:#3b82f6" onclick="selectColor(this, 3)"></div>
+                    <div class="sel-color" style="background:#eab308" onclick="selectColor(this, 46)"></div>
+                    <div class="sel-color" style="background:#22c55e" onclick="selectColor(this, 2)"></div>
+                    <div class="sel-color" style="background:#ffffff" onclick="selectColor(this, 0)"></div>
+                </div>
+            </div>
+
+            <!-- PERMISSIONS TAB -->
+            <div id="perms" class="tab-page">
+                <div class="switch-row">
+                    <label>RESTRICT MODE</label>
+                    <label class="switch" data-tooltip="IF ACTIVE, ONLY AUTHORIZED PERSONNEL IN THE LIST CAN OPERATE SPIKE STRIPS">
+                        <input type="checkbox" id="restrictSwitch">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="add-row">
+                    <input type="text" id="newId" placeholder="ID (es. steam:...)" data-tooltip="ENTER THE PLAYER'S STEAM HEX OR LICENSE IDENTIFIER">
+                    <button onclick="addId()">+</button>
+                </div>
+                <div id="idList" class="tech-list"></div>
+            </div>
+
+            <!-- FOOTER -->
+            <div class="footer">
+                <button class="tech-btn close" onclick="closeMenu()" data-tooltip="CLOSE PANEL WITHOUT SAVING CHANGES">CLOSE</button>
+                <button class="tech-btn save" onclick="saveData()" data-tooltip="SAVE ALL CONFIGURATION CHANGES MADE">SAVE</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOOLTIP  -->
+    <div id="tooltip" class="tech-tooltip">
+        <div id="tooltip-content"></div>
+        <div class="corner tl"></div>
+        <div class="corner tr"></div>
+        <div class="corner bl"></div>
+        <div class="corner br"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

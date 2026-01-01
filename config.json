@@ -1,0 +1,23 @@
+{
+    "restrictMode": false,
+    "maxDist": 26,
+    "fillRate": 0.15,
+    "colors": {
+        "text": "#ffffff",
+        "bar": "#cc0000",
+        "ready": "#87f500"
+    },
+    "dispatch": {
+        "sprite": 161,
+        "enabled": true,
+        "color": 0
+    },
+    "minSpeed": 44,
+    "allowedIds": [],
+    "alpha": {
+        "barProgress": 161,
+        "barBackground": 141,
+        "barText": 202,
+        "targetText": 202
+    }
+}
