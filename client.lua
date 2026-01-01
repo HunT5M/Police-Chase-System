@@ -376,7 +376,7 @@ RegisterNUICallback('saveSettings', function(data, cb)
     cb('ok')
 end)
 
-RegisterKeyMapping('pcem', 'Apri Config LSPD', 'keyboard', '3')
+--RegisterKeyMapping('pcem', 'Apri Config LSPD', 'keyboard', '3')
 RegisterCommand('pcem', function()
     if isMenuOpen or pendingRequest then return end
     pendingRequest = true
@@ -494,4 +494,5 @@ function popTyres(veh)
     for _, tyreId in ipairs(tyres) do SetVehicleTyreBurst(veh, tyreId, true, 1000.0) end
 end
 function ShowHelpNotification(msg) BeginTextCommandDisplayHelp("STRING") AddTextComponentSubstringPlayerName(msg) EndTextCommandDisplayHelp(0, false, true, -1) end
+
 function ShowNotification(msg) SetNotificationTextEntry("STRING") AddTextComponentString(msg) DrawNotification(false, false) end
